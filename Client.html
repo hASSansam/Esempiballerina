@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <title>Album Client</title>
+</head>
+<body>
+    <h1>Album Client</h1>
+    <button id="getAllAlbums">Ottieni tutti gli album</button>
+    <div id="allAlbums"></div>
+
+    <h2>Ottieni album per ID</h2>
+    <input type="text" id="albumId" placeholder="Inserisci ID album">
+    <button id="getAlbum">Ottieni album</button>
+    <div id="album"></div>
+
+    <script>
+        const API_URL = 'http://localhost:8080';
+
+        document.getElementById('getAllAlbums').addEventListener('click', function() {
+            fetch(`${API_URL}/albums`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('allAlbums').innerHTML = JSON.stringify(data, null, 2);
+                });
+        });
+
+        document.getElementById('getAlbum').addEventListener('click', function() {
+            const id = document.getElementById('albumId').value;
+            fetch(`${API_URL}/albums/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('album').innerHTML = JSON.stringify(data, null, 2);
+                });
+        });
+    </script>
+</body>
+</html>
